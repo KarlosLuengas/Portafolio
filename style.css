@@ -2,7 +2,6 @@
   width: 45px;
 }
 
-
 body {
   background-color: #efefef;
   padding-top: 70px;
@@ -32,6 +31,24 @@ body {
   font-size: 25px;
   box-shadow: 15px 15px 0px #808080, 30px 30px 0px #000000;
 }
+#habilidades {
+  background-color: #808080;
+  width: 100%;
+  height: 100%;
+  margin: 20px auto; /* Mejor centrado */
+  padding: 30px;
+  font-size: 25px;
+  box-shadow: 30px 30px 0px #000000;
+}
+#habilidades1 {
+  background-color: #fff;
+  width: 60%;
+  height: 60%;
+  margin: 20px auto; /* Mejor centrado */
+  padding: 30px;
+  font-size: 25px;
+}
+
 /* usamos media queries para hacer el diseño responsive */
 @media (max-width: 992px) {
   #inicio {
@@ -54,8 +71,7 @@ body {
   }
 }
 
-#resaltar{
-    background-color: #4ad4f7;
-    width: fit-content;
+#resaltar {
+  background-color: #4ad4f7;
+  width: fit-content;
 }
-
