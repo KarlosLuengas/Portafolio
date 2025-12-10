@@ -8,3 +8,12 @@ body {
     background-color: #D1D1D1 !important;
 
 }
+
+#inicio {
+    text-align: center;
+    padding: 5px;
+    font-size: 60px;
+    color: #111111;
+    background-color: #D1D1D1;
+    
+}
