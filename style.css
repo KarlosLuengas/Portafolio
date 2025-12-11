@@ -10,12 +10,14 @@
 /* Scroll suave */
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden; /* Prevenir scroll horizontal */
 }
 
 /* Body principal */
 body {
   background-color: #efefef;
   padding-top: 70px; /* Espacio para navbar fija */
+  overflow-x: hidden; /* Prevenir scroll horizontal */
 }
 
 /* ========================================
@@ -132,7 +134,7 @@ body {
 footer {
   background-color: #fff;
   border-radius: 10px;
-  width: 950%;
+  width: 100%; /* Corregido de 950% */
   max-width: 1750px;
   height: 100%;
   margin: 20px auto;
