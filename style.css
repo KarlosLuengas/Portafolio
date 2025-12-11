@@ -1,77 +1,223 @@
+/* ========================================
+   ESTILOS GENERALES
+   ======================================== */
+
+/* Logo en navegación */
 #logo {
   width: 45px;
 }
 
+/* Scroll suave */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Body principal */
 body {
   background-color: #efefef;
-  padding-top: 70px;
+  padding-top: 70px; /* Espacio para navbar fija */
 }
+
+/* ========================================
+   NAVEGACIÓN
+   ======================================== */
+
 .navbar {
   background-color: #d1d1d1 !important;
 }
 
+/* ========================================
+   HERO SECTION - Sección de inicio
+   ======================================== */
+
+/* Título principal */
 #inicio {
   padding: 1px;
-  font-size: 80px; /* Reducido ligeramente de 100px para mejor ajuste */
+  font-size: clamp(40px, 8vw, 80px); /* Tamaño responsivo */
   color: #fff;
   background-color: #4ad4f7;
   width: fit-content;
-  display: inline-block; /* Asegurar que el fondo envuelva el texto correctamente */
+  display: inline-block;
 }
 
+/* Párrafo de presentación */
 #parrafo-inicio {
   margin-top: 1rem;
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem); /* Tamaño responsivo */
 }
 
+/* ========================================
+   SECCIONES DE CONTENIDO
+   ======================================== */
+
+/* Sección Sobre Mi */
 #sobre-mi {
   background-color: #fff;
-  width: 80%;
-  margin: 20px auto; /* Mejor centrado */
-  padding: 30px;
-  font-size: 25px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: clamp(20px, 4vw, 30px);
+  font-size: clamp(1rem, 2vw, 1.5rem);
   box-shadow: 15px 15px 0px #808080, 30px 30px 0px #000000;
 }
+
+/* Sección Habilidades - Contenedor principal */
 #habilidades {
   background-color: #808080;
+  border-radius: 10px;
   width: 100%;
+  max-width: 1400px;
   height: 100%;
-  margin: 20px auto; /* Mejor centrado */
-  padding: 30px;
-  font-size: 25px;
+  margin: 20px auto;
+  padding: clamp(20px, 4vw, 30px);
+  font-size: clamp(1rem, 2vw, 1.5rem);
   box-shadow: 30px 30px 0px #000000;
 }
+
+/* Sección Habilidades - Contenedor interno */
 #habilidades1 {
   background-color: #fff;
-  width: 60%;
-  height: 60%;
-  margin: 20px auto; /* Mejor centrado */
-  padding: 30px;
-  font-size: 25px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 900px;
+  height: 100%;
+  margin: 20px auto;
+  padding: clamp(20px, 4vw, 30px);
+  font-size: clamp(1rem, 2vw, 1.5rem);
 }
 
-/* usamos media queries para hacer el diseño responsive */
-@media (max-width: 992px) {
-  #inicio {
-    font-size: 60px;
-  }
-}
-
-/* usamos media queries para hacer el diseño responsive */
-@media (max-width: 768px) {
-  #inicio {
-    font-size: 40px;
-    width: 100%; /* Ancho completo en móvil se ve mejor usualmente */
-    text-align: center;
-    display: block;
-  }
-
-  #sobre-mi {
-    width: 95%;
-    margin: 20px auto;
-  }
-}
-
+/* Texto resaltado con fondo azul */
 #resaltar {
   background-color: #4ad4f7;
   width: fit-content;
+}
+
+/* Carrusel de imágenes */
+#carouselExampleAutoplaying {
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  margin: 20px auto;
+}
+
+/* Sección Clientes */
+#clientes {
+  background-color: #fff;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  margin: 20px auto;
+  padding: clamp(20px, 4vw, 30px);
+  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+  color: #000;
+  box-shadow: 15px 15px 0px #808080;
+}
+
+/* Sección Proyectos */
+#proyectos {
+  background-color: #fff;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  margin: 20px auto;
+  padding: clamp(20px, 4vw, 30px);
+  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+  color: #000;
+  box-shadow: 15px 15px 0px #efefef, 30px 30px 0px #000000;
+}
+
+/* Footer - Pie de página */
+footer {
+  background-color: #fff;
+  border-radius: 10px;
+  width: 950%;
+  max-width: 1750px;
+  height: 100%;
+  margin: 20px auto;
+  padding: clamp(20px, 4vw, 30px);
+  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+  color: #000;
+  text-align: center;
+  box-shadow: 15px 15px 0px #efefef, 30px 30px 0px #8a8a8a;
+}
+
+/* Sección Contacto */
+#contacto {
+  background-color: #efefef;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  margin: 20px auto;
+  padding: clamp(20px, 4vw, 30px);
+  font-size: clamp(0.9rem, 1.8vw, 1.1rem);
+  color: #000;
+  box-shadow: 15px 15px 0px #fff, 30px 30px 0px #000000;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN - Media Queries
+   ======================================== */
+
+/* Optimizaciones para móviles */
+@media (max-width: 576px) {
+  body {
+    padding-top: 60px;
+  }
+
+  #inicio {
+    font-size: 40px;
+  }
+
+  #sobre-mi {
+    box-shadow: 8px 8px 0px #808080, 15px 15px 0px #000000;
+    font-size: 1rem;
+  }
+
+  #habilidades {
+    box-shadow: 15px 15px 0px #000000;
+    padding: 15px;
+  }
+
+  #habilidades1 {
+    padding: 15px;
+    font-size: 0.95rem;
+  }
+
+  #clientes {
+    box-shadow: 8px 8px 0px #808080;
+  }
+
+  #proyectos {
+    box-shadow: 8px 8px 0px #efefef, 15px 15px 0px #000000;
+  }
+}
+
+/* Optimizaciones para tablets */
+@media (min-width: 577px) and (max-width: 992px) {
+  #inicio {
+    font-size: 60px;
+  }
+
+  #sobre-mi {
+    box-shadow: 12px 12px 0px #808080, 20px 20px 0px #000000;
+  }
+
+  #habilidades {
+    box-shadow: 20px 20px 0px #000000;
+  }
+
+  #clientes {
+    box-shadow: 12px 12px 0px #808080, 20px 20px 0px #000000;
+  }
+
+  #proyectos {
+    box-shadow: 12px 12px 0px #efefef, 20px 20px 0px #000000;
+  }
+
+  footer {
+    box-shadow: 12px 12px 0px #efefef, 20px 20px 0px #8a8a8a;
+  }
 }
