@@ -5,6 +5,11 @@
 /* Logo en navegación */
 #logo {
   width: 45px;
+  transition: transform 0.3s ease;
+}
+
+#logo:hover {
+  transform: scale(1.1);
 }
 
 /* Scroll suave */
@@ -21,11 +26,74 @@ body {
 }
 
 /* ========================================
+   ANIMACIONES GLOBALES
+   ======================================== */
+
+/* Keyframes para fade in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animación para el título principal */
+@keyframes titleEntrance {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ========================================
    NAVEGACIÓN
    ======================================== */
 
 .navbar {
   background-color: #d1d1d1 !important;
+  transition: all 0.3s ease;
+}
+
+.nav-link {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+
+
+.nav-link:hover::after {
+  width: 100%;
+  left: 0;
 }
 
 /* ========================================
@@ -40,12 +108,19 @@ body {
   background-color: #4ad4f7;
   width: fit-content;
   display: inline-block;
+  animation: titleEntrance 0.8s ease-out;
 }
 
 /* Párrafo de presentación */
 #parrafo-inicio {
   margin-top: 1rem;
   font-size: clamp(1.1rem, 2.5vw, 1.5rem); /* Tamaño responsivo */
+  animation: fadeIn 1s ease-out 0.3s both;
+}
+
+/* Imagen del hero */
+#pcd-img {
+  animation: fadeIn 1s ease-out 0.5s both;
 }
 
 /* ========================================
@@ -62,6 +137,17 @@ body {
   padding: clamp(20px, 4vw, 30px);
   font-size: clamp(1rem, 2vw, 1.5rem);
   box-shadow: 15px 15px 0px #808080, 30px 30px 0px #000000;
+  animation: fadeIn 0.8s ease-out;
+  transition: transform 0.3s ease;
+}
+
+#sobre-mi a {
+  transition: color 0.3s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+#sobre-mi a:hover {
+  transform: translateX(5px);
 }
 
 /* Sección Habilidades - Contenedor principal */
@@ -75,6 +161,7 @@ body {
   padding: clamp(20px, 4vw, 30px);
   font-size: clamp(1rem, 2vw, 1.5rem);
   box-shadow: 30px 30px 0px #000000;
+  animation: fadeIn 0.8s ease-out;
 }
 
 /* Sección Habilidades - Contenedor interno */
@@ -87,6 +174,16 @@ body {
   margin: 20px auto;
   padding: clamp(20px, 4vw, 30px);
   font-size: clamp(1rem, 2vw, 1.5rem);
+  animation: slideInLeft 0.8s ease-out;
+}
+
+.badge {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Texto resaltado con fondo azul */
@@ -114,6 +211,15 @@ body {
   font-size: clamp(0.9rem, 1.8vw, 1.1rem);
   color: #000;
   box-shadow: 15px 15px 0px #808080;
+  animation: fadeIn 0.8s ease-out;
+}
+
+#clientes a {
+  transition: color 0.3s ease;
+}
+
+#clientes a:hover {
+  color: #4ad4f7 !important;
 }
 
 /* Sección Proyectos */
@@ -128,6 +234,105 @@ body {
   font-size: clamp(0.9rem, 1.8vw, 1.1rem);
   color: #000;
   box-shadow: 15px 15px 0px #efefef, 30px 30px 0px #000000;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.card {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(74, 212, 247, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.card:hover {
+  transform: translateY(-15px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(74, 212, 247, 0.3), 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover::before {
+  left: 100%;
+}
+
+.card-img-top {
+  transition: transform 0.4s ease;
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+.card-title a {
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.card-title a::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #4ad4f7;
+  transition: width 0.3s ease;
+}
+
+.card-title a:hover {
+  color: #4ad4f7 !important;
+}
+
+.card-title a:hover::after {
+  width: 100%;
+}
+
+/* Clases para animaciones de scroll */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-reveal-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-reveal-left.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-reveal-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.scroll-reveal-right.active {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 /* Footer - Pie de página */
@@ -143,6 +348,16 @@ footer {
   color: #000;
   text-align: center;
   box-shadow: 15px 15px 0px #efefef, 30px 30px 0px #8a8a8a;
+  animation: fadeIn 0.8s ease-out;
+}
+
+footer a {
+  transition: color 0.3s ease, transform 0.2s ease;
+  display: inline-block;
+}
+
+footer a:hover {
+  transform: translateX(5px);
 }
 
 /* Sección Contacto */
@@ -157,6 +372,25 @@ footer {
   font-size: clamp(0.9rem, 1.8vw, 1.1rem);
   color: #000;
   box-shadow: 15px 15px 0px #fff, 30px 30px 0px #000000;
+  animation: fadeIn 0.8s ease-out;
+}
+
+#contacto .form-control {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#contacto .form-control:focus {
+  border-color: #4ad4f7;
+  box-shadow: 0 0 0 0.2rem rgba(74, 212, 247, 0.25);
+}
+
+#contacto .btn {
+  transition: all 0.3s ease;
+}
+
+#contacto .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 /* ========================================
