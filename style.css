@@ -12,24 +12,24 @@
   transform: scale(1.1);
 }
 
-/* Scroll suave */
+/* Scroll suave y prevención de scroll horizontal */
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden; /* Prevenir scroll horizontal */
+  overflow-x: hidden;
 }
 
-/* Body principal */
+/* Body con padding para navbar fija */
 body {
   background-color: #efefef;
-  padding-top: 70px; /* Espacio para navbar fija */
-  overflow-x: hidden; /* Prevenir scroll horizontal */
+  padding-top: 70px;
+  overflow-x: hidden;
 }
 
 /* ========================================
    ANIMACIONES GLOBALES
    ======================================== */
 
-/* Keyframes para fade in */
+/* Keyframes de animaciones */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -89,8 +89,6 @@ body {
   transition: color 0.3s ease;
 }
 
-
-
 .nav-link:hover::after {
   width: 100%;
   left: 0;
@@ -136,13 +134,17 @@ body {
   margin: 20px auto;
   padding: clamp(20px, 4vw, 30px);
   font-size: clamp(1rem, 2vw, 1.5rem);
-  box-shadow: 15px 15px 0px #808080, 30px 30px 0px #000000;
+  box-shadow:
+    15px 15px 0px #808080,
+    30px 30px 0px #000000;
   animation: fadeIn 0.8s ease-out;
   transition: transform 0.3s ease;
 }
 
 #sobre-mi a {
-  transition: color 0.3s ease, transform 0.2s ease;
+  transition:
+    color 0.3s ease,
+    transform 0.2s ease;
   display: inline-block;
 }
 
@@ -178,7 +180,9 @@ body {
 }
 
 .badge {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .badge:hover {
@@ -233,7 +237,9 @@ body {
   padding: clamp(20px, 4vw, 30px);
   font-size: clamp(0.9rem, 1.8vw, 1.1rem);
   color: #000;
-  box-shadow: 15px 15px 0px #efefef, 30px 30px 0px #000000;
+  box-shadow:
+    15px 15px 0px #efefef,
+    30px 30px 0px #000000;
   animation: fadeIn 0.8s ease-out;
 }
 
@@ -262,7 +268,9 @@ body {
 
 .card:hover {
   transform: translateY(-15px) scale(1.02);
-  box-shadow: 0 15px 35px rgba(74, 212, 247, 0.3), 0 5px 15px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 15px 35px rgba(74, 212, 247, 0.3),
+    0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .card:hover::before {
@@ -305,7 +313,9 @@ body {
 .scroll-reveal {
   opacity: 0;
   transform: translateY(50px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
 }
 
 .scroll-reveal.active {
@@ -316,7 +326,9 @@ body {
 .scroll-reveal-left {
   opacity: 0;
   transform: translateX(-50px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
 }
 
 .scroll-reveal-left.active {
@@ -327,7 +339,9 @@ body {
 .scroll-reveal-right {
   opacity: 0;
   transform: translateX(50px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
 }
 
 .scroll-reveal-right.active {
@@ -347,12 +361,16 @@ footer {
   font-size: clamp(0.9rem, 1.8vw, 1.1rem);
   color: #000;
   text-align: center;
-  box-shadow: 15px 15px 0px #efefef, 30px 30px 0px #8a8a8a;
+  box-shadow:
+    15px 15px 0px #efefef,
+    30px 30px 0px #8a8a8a;
   animation: fadeIn 0.8s ease-out;
 }
 
 footer a {
-  transition: color 0.3s ease, transform 0.2s ease;
+  transition:
+    color 0.3s ease,
+    transform 0.2s ease;
   display: inline-block;
 }
 
@@ -371,12 +389,16 @@ footer a:hover {
   padding: clamp(20px, 4vw, 30px);
   font-size: clamp(0.9rem, 1.8vw, 1.1rem);
   color: #000;
-  box-shadow: 15px 15px 0px #fff, 30px 30px 0px #000000;
+  box-shadow:
+    15px 15px 0px #fff,
+    30px 30px 0px #000000;
   animation: fadeIn 0.8s ease-out;
 }
 
 #contacto .form-control {
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 #contacto .form-control:focus {
@@ -408,7 +430,9 @@ footer a:hover {
   }
 
   #sobre-mi {
-    box-shadow: 8px 8px 0px #808080, 15px 15px 0px #000000;
+    box-shadow:
+      8px 8px 0px #808080,
+      15px 15px 0px #000000;
     font-size: 1rem;
   }
 
@@ -427,7 +451,9 @@ footer a:hover {
   }
 
   #proyectos {
-    box-shadow: 8px 8px 0px #efefef, 15px 15px 0px #000000;
+    box-shadow:
+      8px 8px 0px #efefef,
+      15px 15px 0px #000000;
   }
 }
 
@@ -438,7 +464,9 @@ footer a:hover {
   }
 
   #sobre-mi {
-    box-shadow: 12px 12px 0px #808080, 20px 20px 0px #000000;
+    box-shadow:
+      12px 12px 0px #808080,
+      20px 20px 0px #000000;
   }
 
   #habilidades {
@@ -446,14 +474,20 @@ footer a:hover {
   }
 
   #clientes {
-    box-shadow: 12px 12px 0px #808080, 20px 20px 0px #000000;
+    box-shadow:
+      12px 12px 0px #808080,
+      20px 20px 0px #000000;
   }
 
   #proyectos {
-    box-shadow: 12px 12px 0px #efefef, 20px 20px 0px #000000;
+    box-shadow:
+      12px 12px 0px #efefef,
+      20px 20px 0px #000000;
   }
 
   footer {
-    box-shadow: 12px 12px 0px #efefef, 20px 20px 0px #8a8a8a;
+    box-shadow:
+      12px 12px 0px #efefef,
+      20px 20px 0px #8a8a8a;
   }
 }
