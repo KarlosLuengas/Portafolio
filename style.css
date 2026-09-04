@@ -1,0 +1,853 @@
+/* ==========================================================================
+   PORTAFOLIO — KARLOS LUENGAS
+   Hoja de estilos propia. Se carga después de Bootstrap, así que estas reglas
+   ganan sin necesidad de !important salvo donde se indique.
+
+   La paleta original se conserva íntegra. La única variación es que el patrón
+   de franjas que corre por detrás del texto usa las mismas tonalidades
+   mezcladas al 45 % con el fondo: mismo tono, menor intensidad, para que el
+   texto blanco encima cumpla el contraste mínimo AA (4.5:1). Las franjas
+   animadas del hero y el abanico del pie conservan el color a saturación
+   completa porque ahí no hay texto encima.
+   ========================================================================== */
+
+/* ==========================================================================
+   1. VARIABLES
+   ========================================================================== */
+
+:root {
+  /* Paleta a saturación completa */
+  --fondo: #312938;
+  --carmesi: #b21236;
+  --naranja-rojizo: #e64c34;
+  --naranja: #ff7f24;
+  --ambar: #ffb41d;
+  --turquesa: #30a8a7;
+
+  /* Velo del mismo color de fondo al 55 % que se tiende sobre las franjas
+     verticales, justo donde va el texto. Deja los tonos idénticos pero baja
+     su intensidad hasta que el blanco encima cumple AA.
+     Contraste resultante: carmesí 11.2 · rojizo 8.1 · naranja 6.3 ·
+     ámbar 5.0 · turquesa 6.8 : 1 (el mínimo exigido es 4.5:1).
+     El velo se desvanece al llegar al doblez, así que el abanico del pie
+     conserva el color a saturación completa. */
+  --velo: rgba(49, 41, 56, 0.55);
+  --velo-transicion: 90px;
+
+  /* Texto y superficies */
+  --texto: #fff;
+  --texto-2: rgba(255, 255, 255, 0.78);
+  --texto-3: rgba(255, 255, 255, 0.6);
+  --borde: rgba(255, 255, 255, 0.16);
+  --superficie: rgba(255, 255, 255, 0.04);
+  --superficie-clara: #f5f2f6;
+
+  /* Retícula: un solo ancho y un solo canal lateral para TODA la página.
+     De aquí sale el eje vertical que antes no existía. */
+  --ancho-max: 1200px;
+  --canal: clamp(1.25rem, 4vw, 2rem);
+  --ritmo: clamp(3.5rem, 8vw, 6rem);
+
+  /* Geometría de las franjas decorativas */
+  --franja-alto: 420px;
+  --franja-desfase: -110px;
+  --hero-hueco: 240px;
+  --doblez-alto: clamp(220px, 24vw, 420px);
+}
+
+/* ==========================================================================
+   2. BASE
+   ========================================================================== */
+
+html {
+  background-color: var(--fondo);
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+/* Compensa la navbar fija al saltar con anclas */
+:target {
+  scroll-margin-top: 90px;
+}
+
+body {
+  background-color: var(--fondo);
+  /* Tres capas, de arriba abajo en el orden en que se declaran:
+       1. Velo: baja la intensidad de las franjas donde hay texto y se
+          desvanece antes del doblez.
+       2. Abanico del doblez (SVG), anclado abajo, a saturación completa.
+       3. Franjas verticales, también a saturación completa.
+     Las tres usan las mismas posiciones en porcentaje, así que siguen
+     alineadas con cualquier ancho de pantalla.
+
+     OJO: los 5 colores están escritos dos veces (en el SVG van codificados
+     con %23 en vez de #). Si cambias uno, cámbialo en las dos capas. */
+  background-image:
+    linear-gradient(
+      to bottom,
+      var(--velo) 0,
+      var(--velo) calc(100% - var(--doblez-alto) - var(--velo-transicion)),
+      transparent calc(100% - var(--doblez-alto))
+    ),
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 799 188' preserveAspectRatio='none'><polygon fill='%23b21236' points='291,0 321,0 62,188 -67,188'/><polygon fill='%23e64c34' points='337.75,0 367.75,0 263,188 134,188'/><polygon fill='%23ff7f24' points='384.5,0 414.5,0 464,188 335,188'/><polygon fill='%23ffb41d' points='431.25,0 461.25,0 665,188 536,188'/><polygon fill='%2330a8a7' points='478,0 508,0 866,188 737,188'/></svg>"),
+    linear-gradient(
+      to right,
+      var(--fondo) 36.42%,
+      var(--carmesi) 36.42% 40.18%,
+      var(--fondo) 40.18% 42.27%,
+      var(--naranja-rojizo) 42.27% 46.03%,
+      var(--fondo) 46.03% 48.12%,
+      var(--naranja) 48.12% 51.88%,
+      var(--fondo) 51.88% 53.97%,
+      var(--ambar) 53.97% 57.73%,
+      var(--fondo) 57.73% 59.82%,
+      var(--turquesa) 59.82% 63.58%,
+      var(--fondo) 63.58%
+    );
+  background-repeat: no-repeat;
+  background-position: center top, center bottom, center top;
+  background-size:
+    100% 100%,
+    100% var(--doblez-alto),
+    100% calc(100% - var(--doblez-alto));
+  color: var(--texto);
+  padding-top: 70px;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Enlace de salto, visible solo al tabular */
+.salta-al-contenido {
+  position: absolute;
+  left: -9999px;
+  z-index: 1100;
+  padding: 0.75rem 1.25rem;
+  background: var(--ambar);
+  color: var(--fondo);
+  font-weight: 600;
+  border-radius: 0 0 0.5rem 0;
+}
+
+.salta-al-contenido:focus {
+  left: 0;
+  top: 0;
+}
+
+/* ==========================================================================
+   3. TIPOGRAFÍA
+   Jerarquía única: todas las secciones usan el mismo tamaño de título, y la
+   medida de línea se limita a 65 caracteres en cualquier bloque de lectura.
+   ========================================================================== */
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.seccion__titulo {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 1.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--borde);
+}
+
+/* Rótulo pequeño para sub-bloques (antes eran h5/h6 sueltos) */
+.rotulo {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--texto-3);
+  margin-bottom: 0.75rem;
+}
+
+.parrafo {
+  max-width: 65ch;
+  color: var(--texto-2);
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+}
+
+.nota {
+  margin-top: 2.5rem;
+  color: var(--texto-2);
+}
+
+a {
+  color: var(--texto);
+  text-decoration-color: var(--borde);
+  text-underline-offset: 0.25em;
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--ambar);
+  text-decoration-color: currentColor;
+}
+
+/* ==========================================================================
+   4. ICONOS
+   Tamaño por CSS, no por atributos width/height sueltos en cada SVG.
+   ========================================================================== */
+
+.ico {
+  width: 1.5rem;
+  height: 1.5rem;
+  flex: none;
+}
+
+.ico--nav {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.ico--hab {
+  width: 1.6rem;
+  height: 1.6rem;
+  color: var(--acento);
+}
+
+.ico--stack {
+  width: 1.6rem;
+  height: 1.6rem;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.ico--github {
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.enlace-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* ==========================================================================
+   5. RETÍCULA
+   Un solo contenedor para todas las secciones: mismo ancho, mismo margen
+   izquierdo. Esto es lo que da el eje vertical de la página.
+   ========================================================================== */
+
+.seccion {
+  width: 100%;
+  max-width: var(--ancho-max);
+  margin-inline: auto;
+  padding-inline: var(--canal);
+}
+
+main > section,
+main > div > section {
+  padding-block: var(--ritmo);
+}
+
+/* ==========================================================================
+   6. NAVEGACIÓN
+   ========================================================================== */
+
+.navbar {
+  background-color: var(--fondo) !important;
+  border-bottom: 1px solid var(--borde);
+}
+
+.nav-caja {
+  width: 100%;
+  max-width: var(--ancho-max);
+  margin-inline: auto;
+  padding-inline: var(--canal);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+#logo {
+  width: 42px;
+  height: auto;
+  display: block;
+}
+
+.navbar .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding-inline: 0.85rem;
+  color: var(--texto-2);
+  border-bottom: 2px solid transparent;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link:focus-visible {
+  color: var(--texto);
+  border-bottom-color: var(--ambar);
+}
+
+.navbar-collapse.collapsing {
+  transition: none;
+}
+
+@media (max-width: 991.98px) {
+  .navbar .nav-link {
+    padding-inline: 0;
+  }
+}
+
+/* ==========================================================================
+   7. HERO
+   El contenido arranca por debajo del recorrido de la franja: así el título no
+   se lee nunca sobre el naranja ni sobre el ámbar, que son los tonos donde el
+   contraste con blanco caía a 2.5:1 y 1.8:1.
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding-top: var(--hero-hueco);
+  padding-bottom: clamp(2rem, 4vw, 3rem);
+}
+
+.hero-franja,
+.sobremi-franja {
+  position: absolute;
+  top: var(--franja-desfase);
+  left: 0;
+  width: 100%;
+  height: var(--franja-alto);
+  pointer-events: none;
+}
+
+.hero__texto {
+  position: relative;
+  z-index: 1;
+}
+
+.hero__antetitulo {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ambar);
+  margin-bottom: 0.5rem;
+}
+
+.hero__titulo {
+  font-size: clamp(2.5rem, 7vw, 4.75rem);
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+.hero__bajada {
+  max-width: 45ch;
+  font-size: clamp(1.05rem, 2vw, 1.375rem);
+  font-style: italic;
+  color: var(--texto-2);
+  margin-bottom: 2rem;
+}
+
+.hero__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+/* Animación de la franja del hero (sin cambios respecto al original) */
+@keyframes franja-recorre {
+  from {
+    stroke-dashoffset: 2114;
+  }
+  to {
+    stroke-dashoffset: -2114;
+  }
+}
+
+.hero-franja-recorrido {
+  stroke-dasharray: 2114 2114;
+  animation: franja-recorre 12s linear infinite;
+}
+
+@keyframes sobremi-recorre {
+  from {
+    stroke-dashoffset: 2290;
+  }
+  to {
+    stroke-dashoffset: -2290;
+  }
+}
+
+.sobremi-franja-recorrido {
+  stroke-dasharray: 2290 2290;
+  animation: sobremi-recorre 12s linear 4.5s infinite backwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero-franja-recorrido,
+  .sobremi-franja-recorrido {
+    animation: none;
+    stroke-dasharray: none;
+  }
+}
+
+/* ==========================================================================
+   8. BOTONES
+   Sustituyen a .btn-primary de Bootstrap, cuyo azul #0d6efd no pertenece a
+   la paleta del sitio.
+   ========================================================================== */
+
+.boton {
+  display: inline-block;
+  padding: 0.7rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.boton--solido {
+  background: var(--naranja);
+  color: var(--fondo); /* 5.5:1 sobre el naranja */
+}
+
+.boton--solido:hover,
+.boton--solido:focus-visible {
+  background: var(--ambar);
+  color: var(--fondo);
+}
+
+.boton--linea {
+  border-color: var(--turquesa);
+  color: var(--texto);
+}
+
+.boton--linea:hover,
+.boton--linea:focus-visible {
+  background: var(--turquesa);
+  color: var(--fondo);
+}
+
+/* ==========================================================================
+   9. SOBRE MÍ
+   ========================================================================== */
+
+.sobremi-envoltura {
+  position: relative;
+  overflow: hidden;
+}
+
+.sobremi__texto {
+  position: relative;
+  z-index: 1;
+  padding-top: var(--hero-hueco);
+}
+
+/* ==========================================================================
+   10. HABILIDADES
+   Rejilla fluida: resuelve a la vez la columna de 28 caracteres por línea y
+   la mezcla de dos lenguajes visuales (unos grupos con badges de colores de
+   Bootstrap y otros con viñetas "- texto").
+   ========================================================================== */
+
+.habilidades {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem 2.5rem;
+}
+
+.hab {
+  --acento: var(--naranja);
+}
+
+.hab[data-acento="1"] { --acento: var(--carmesi); }
+.hab[data-acento="2"] { --acento: var(--naranja-rojizo); }
+.hab[data-acento="3"] { --acento: var(--naranja); }
+.hab[data-acento="4"] { --acento: var(--ambar); }
+.hab[data-acento="5"] { --acento: var(--turquesa); }
+
+.hab__titulo {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid var(--acento);
+}
+
+.etiquetas {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+}
+
+/* Componente único para toda tecnología o concepto del sitio */
+.etiqueta {
+  display: inline-block;
+  padding: 0.3em 0.85em;
+  border: 1px solid var(--acento);
+  border-radius: 999px;
+  font-size: 0.875rem;
+  line-height: 1.4;
+  color: var(--texto);
+  white-space: nowrap;
+}
+
+/* ==========================================================================
+   11. CLIENTES
+   ========================================================================== */
+
+.cliente__nombre {
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.cliente__nombre a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+/* El logo es oscuro con fondo transparente: sobre --fondo desaparecía */
+.cliente__logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem 0.6rem;
+  background: var(--superficie-clara);
+  border-radius: 0.5rem;
+}
+
+.cliente__logo img {
+  display: block;
+  width: 70px;
+  height: auto;
+}
+
+.entregables {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 2rem;
+  max-width: 60ch;
+  color: var(--texto-2);
+}
+
+.entregables li {
+  position: relative;
+  padding-left: 1.75rem;
+  margin-bottom: 0.6rem;
+}
+
+.entregables li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--turquesa);
+  font-weight: 700;
+}
+
+/* Fila de iconos de tecnologías, reutilizada en clientes y en proyectos */
+.stack {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0;
+  margin: 0;
+}
+
+/* Carrusel de imágenes: vive dentro del .row, así que sí forma la segunda columna */
+.carrusel-imgs {
+  border: 1px solid var(--borde);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: var(--superficie-clara);
+}
+
+.carrusel-imgs .carousel-item img {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.carrusel-imgs .carousel-control-prev,
+.carrusel-imgs .carousel-control-next {
+  width: 12%;
+}
+
+.carrusel-imgs .carousel-control-prev-icon,
+.carrusel-imgs .carousel-control-next-icon {
+  padding: 1.1rem;
+  border-radius: 50%;
+  background-color: var(--fondo);
+}
+
+/* --------------------------------------------------------------------------
+   Carrusel de clientes (un cliente por diapositiva)
+   Es scroll horizontal con ajuste por diapositiva: así el carrusel de imágenes
+   de Bootstrap que va dentro de cada cliente sigue funcionando sin conflicto.
+   -------------------------------------------------------------------------- */
+
+.clientes__pista {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.clientes__pista::-webkit-scrollbar {
+  display: none;
+}
+
+.clientes__slide {
+  flex: 0 0 100%;
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+/* El .row de Bootstrap sale de su caja con márgenes negativos: dentro de una
+   pista con scroll horizontal eso desajustaría el ajuste por diapositiva */
+.clientes__slide > .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.clientes__nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.clientes__flecha {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--texto);
+  background: var(--superficie-clara);
+  border: 1px solid var(--borde);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.clientes__flecha:hover:not(:disabled) {
+  border-color: var(--turquesa);
+  color: var(--turquesa);
+}
+
+.clientes__flecha:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.clientes__puntos {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.clientes__punto {
+  width: 0.7rem;
+  height: 0.7rem;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--borde);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.clientes__punto[aria-current="true"] {
+  background: var(--turquesa);
+  border-color: var(--turquesa);
+}
+
+/* Sin scroll-behavior suave si el usuario pidió menos movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .clientes__pista {
+    scroll-behavior: auto;
+  }
+}
+
+/* ==========================================================================
+   12. PROYECTOS
+   Todas las imágenes comparten proporción y superficie, así que las tarjetas
+   quedan a la misma altura y las ilustraciones oscuras con transparencia
+   (grúas, JM Components) dejan de perderse contra el fondo.
+   ========================================================================== */
+
+.proyectos {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card {
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  color: var(--texto);
+}
+
+.card:hover {
+  border-color: var(--turquesa);
+}
+
+.card__media {
+  aspect-ratio: 16 / 9;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: var(--superficie-clara);
+}
+
+.card__media img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem;
+}
+
+.card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.card-title a {
+  text-decoration: none;
+}
+
+.card-title a:hover {
+  text-decoration: underline;
+}
+
+.card-text {
+  margin: 0;
+  color: var(--texto-2);
+  font-size: 0.95rem;
+}
+
+.card .stack {
+  margin-top: auto;
+  padding-top: 0.5rem;
+}
+
+/* ==========================================================================
+   13. CONTACTO
+   ========================================================================== */
+
+.contacto form {
+  max-width: 34rem;
+}
+
+.campo {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--texto-2);
+  margin-bottom: 0.35rem;
+}
+
+.form-control {
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--borde);
+  color: var(--texto);
+  padding: 0.7rem 0.9rem;
+  border-radius: 0.5rem;
+}
+
+.form-control::placeholder {
+  color: rgba(255, 255, 255, 0.42);
+}
+
+.form-control:focus {
+  background-color: rgba(255, 255, 255, 0.09);
+  border-color: var(--turquesa);
+  box-shadow: 0 0 0 0.2rem rgba(48, 168, 167, 0.3);
+  color: var(--texto);
+}
+
+/* ==========================================================================
+   14. PIE
+   El texto termina antes del abanico, de modo que el doblez puede conservar
+   el color a saturación completa sin comprometer la lectura.
+   ========================================================================== */
+
+footer {
+  padding-top: var(--ritmo);
+  padding-bottom: calc(var(--doblez-alto) + 8.5rem);
+  border-top: 1px solid var(--borde);
+}
+
+.pie__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.pie__legal {
+  margin: 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--borde);
+  color: var(--texto-3);
+  font-size: 0.875rem;
+}
+
+/* ==========================================================================
+   15. RESPONSIVE
+   ========================================================================== */
+
+@media (max-width: 991.98px) {
+  :root {
+    --franja-alto: 340px;
+    --franja-desfase: -88px;
+    --hero-hueco: 195px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  :root {
+    --franja-alto: 260px;
+    --franja-desfase: -68px;
+    --hero-hueco: 150px;
+  }
+
+  body {
+    padding-top: 60px;
+  }
+
+  .etiqueta {
+    white-space: normal;
+  }
+}
